@@ -10,15 +10,20 @@ class SelectPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [ Column(
+        children: [
+          // Score Board
+
+
+          // Main Game layer
+          Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Tic tak toe heading
-            const Center(child: Text("Tic Tak Toe", style: TextStyle(color: Colors.white, fontSize: 71))),
+            const Center(child: Text("Tic Tak Toe", style: TextStyle(color: Color(0xFFFFAA3A), fontSize: 71))),
 
-            // Container to get name of two playes
+            // Container to get name of two players
             Container(
               padding: const EdgeInsets.all(15),
               margin: const EdgeInsets.all(20),

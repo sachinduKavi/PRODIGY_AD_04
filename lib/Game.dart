@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tic_tak_toe/SelectPlayer.dart';
 
 class Game extends StatefulWidget {
 
@@ -14,6 +15,23 @@ class _GameState extends State<Game> {
   String player1, player2;
   _GameState(this.player1, this.player2);
   bool player01Turn = true;
+  // Player 01 and Player 02 score
+  int player01Score = 0, player02Score = 0;
+  List<List<int>> winCoordinates = [
+    [0 ,1, 2],
+    [3, 4, 5],
+    [6, 4, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+  late BuildContext contexts;
+
+  // Clicked containers
+  List<int> player01 = [];
+  List<int> player02 = [];
 
 
   List imageName = [];
@@ -25,22 +43,103 @@ class _GameState extends State<Game> {
     for(int i = 0; i < 9; i++) {
       imageName.add("blank.png");
     }
+
+  }
+
+  // Display winner dialog prompt
+  void showWinnerDialog(String playerName) {
+    showDialog(context: contexts, builder: (BuildContext context) {
+      return AlertDialog(
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          side: BorderSide(color: Colors.white, width: 4)
+        ),
+        backgroundColor: Colors.black,
+        content: SizedBox(
+          width: 400,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(playerName, style: const TextStyle(fontSize: 45, color: Color(0xFFFFAA3A)),),
+
+              const Text("<<Wins>>", style: TextStyle(fontSize: 45, color: Color(0xFFFFAA3A)),),
+
+              // Players score gains
+              Padding(padding: const EdgeInsets.all(10), child: Text("$player1: 3 \\ $player2: 5", style: const TextStyle(fontSize: 20, color: Colors.white),)),
+
+              // Button list for control the game
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // Reset the game
+                  IconButton(onPressed: (){
+
+                  }, icon: const Icon(Icons.restart_alt_sharp, color: Colors.white, size: 45,)),
+
+                  // Continue the game
+                  IconButton(onPressed: (){
+
+                  }, icon: const Icon(Icons.play_circle_outline_rounded, color: Colors.white, size: 45,)),
+
+                  // Exit the game
+                  IconButton(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                      return SelectPlayer();
+                    }));
+                  }, icon: const Icon(Icons.exit_to_app, color: Colors.white, size: 45,)),
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   void clickOnSq(int num) {
-    setState(() {
-      if(player01Turn) {
-        imageName[num] = 'cancel.png';
-      } else {
-        imageName[num] = 'o.png';
+    int count;
+    if(!player01.contains(num) && !player02.contains(num)){
+      setState(() {
+        if(player01Turn) {
+          player01.add(num);
+          imageName[num] = 'cancel.png';
+        } else {
+          player02.add(num);
+          imageName[num] = 'o.png';
+        }
+      });
+
+      // Checking for game winner
+      for(List miniCoordinates in winCoordinates) {
+        count = 0;
+        for(int num in miniCoordinates) {
+          if((player01Turn?player01:player02).contains(num)) {
+            count++;
+          } else {
+            break;
+          }
+        }
+        print('count $count');
+        if(count >= 3) {
+          showWinnerDialog("Sachindu");
+          break;
+        }
       }
-    });
-    player01Turn = !player01Turn;
+
+      // Check for match draw
+      if(player01.length + player02.length >= 9) {
+        print("Draw Match");
+      }else {
+        player01Turn = !player01Turn;
+      }
+      // if(player01.)
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print('$player1  $player2');
+    contexts = context;
     double screenWidth = MediaQuery.of(context).size.width;
     double miniCon = (screenWidth-85)/3;
     return Scaffold(
@@ -81,7 +180,6 @@ class _GameState extends State<Game> {
                       padding: const EdgeInsets.only(top: 8, bottom: 4),
                       child: Row(
                         children: [
-
                           InkWell(
                             onTap: () {
                               clickOnSq(0);
@@ -102,6 +200,7 @@ class _GameState extends State<Game> {
                           InkWell(
                             onTap: () {
                               clickOnSq(1);
+                              showWinnerDialog("Sachindu");
                             },
                             child: Container(
                               margin: const EdgeInsets.only(left: 8, right: 4),
