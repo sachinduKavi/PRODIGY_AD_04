@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'Game.dart';
 
 class SelectPlayer extends StatelessWidget {
@@ -11,9 +11,6 @@ class SelectPlayer extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Score Board
-
-
           // Main Game layer
           Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,9 +37,12 @@ class SelectPlayer extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(style: const TextStyle(color: Colors.white, fontSize: 22),
                       cursorColor: Colors.white,
+                      maxLength: 10,
                       controller: player01Controller,
+                      textCapitalization: TextCapitalization.words,
                       decoration: const InputDecoration(hintText: "Player 01",
                         filled: true,
+                        counter: Offstage(),
                         fillColor: Colors.black,
                         hintStyle: TextStyle(color: Color(0xFFBFBFBF)),
                         prefixIcon: Icon(Icons.close, color: Colors.white, size: 35,),
@@ -63,11 +63,13 @@ class SelectPlayer extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(style: const TextStyle(color: Colors.white, fontSize: 22),
+                        maxLength: 10,
                         controller: player02Controller,
                         cursorColor: Colors.white,
-
+                        textCapitalization: TextCapitalization.words,
                         decoration: const InputDecoration(hintText: "Player 02",
                             filled: true,
+                            counter: Offstage(),
                             fillColor: Colors.black,
                             hintStyle: TextStyle(color: Color(0xFFBFBFBF)),
                             prefixIcon: Icon(Icons.circle_outlined, color: Colors.white, size: 35,),
@@ -107,7 +109,12 @@ class SelectPlayer extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               padding: const EdgeInsets.all(20),
               height: double.infinity,
-              child: const Text("Developed by Sachindu Kavishka", style: TextStyle(color: Colors.white, fontSize: 15),))
+              child: InkWell(
+                  onTap: () async {
+                    final Uri url = Uri.parse("https://www.linkedin.com/in/sachindukavishka7070/");
+                    await launchUrl(url);
+                  },
+                  child: const Text("Developed by Sachindu Kavishka", style: TextStyle(color: Colors.white, fontSize: 15),)))
       ]
       ),
       backgroundColor: const Color(0xFF0E2127),
