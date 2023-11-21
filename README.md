@@ -1,16 +1,3 @@
-# tic_tak_toe
+Tic-tac-toe is a two-player game where the goal is to form a line of three of your marks (X or O) horizontally, vertically, or diagonally on a 3x3 grid. Players take turns placing their marks in empty cells. The game ends when one player achieves a winning line or when the grid is full, resulting in a draw. Players cannot overwrite each other's marks, and the first to complete a line wins.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Download APK : https://drive.google.com/file/d/1oosBSZttBIgKbcFp21Qh7tKLiAK0QNFJ/view?usp=sharing
